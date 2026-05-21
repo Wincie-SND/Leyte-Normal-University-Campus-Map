@@ -371,3 +371,99 @@ font-size:14px;
 font-weight:bold;
 color:white;
 }
+
+@media screen and (max-width:768px){
+
+body{
+overflow-x:hidden;
+}
+
+.topbar{
+height:auto;
+padding:15px;
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+.left-section{
+justify-content:center;
+}
+
+.logo{
+width:55px;
+height:55px;
+}
+
+.bagong-logo{
+width:45px;
+}
+
+.large{
+font-size:24px;
+}
+
+.small{
+font-size:14px;
+}
+
+.right-section{
+align-items:center;
+text-align:center;
+}
+
+.controls{
+padding:12px;
+display:flex;
+flex-direction:column;
+gap:10px;
+align-items:center;
+}
+
+.search-box{
+margin-left:0;
+width:90%;
+}
+
+#map{
+position:relative;
+left:0;
+top:0;
+width:92%;
+height:420px;
+margin:20px auto;
+display:block;
+}
+
+.side-panel{
+position:relative !important;
+top:0 !important;
+right:0 !important;
+width:92% !important;
+height:auto !important;
+margin:20px auto;
+display:block !important;
+}
+
+#legendBox{
+height:auto !important;
+min-height:250px;
+}
+
+#legendBox ul{
+grid-template-columns:1fr !important;
+text-align:left !important;
+}
+
+#placeInfo{
+height:auto !important;
+min-height:300px;
+}
+
+.place-img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+}

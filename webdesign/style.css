@@ -1,0 +1,373 @@
+body{
+
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+background: #d6a73d;
+
+}
+
+.controls{
+
+
+    
+padding:15px;
+
+background: #d6a73d;
+
+text-align:center ;
+
+box-shadow:
+0 2px 10px
+rgba(0, 0, 0, 0.1);
+
+z-index:1000;
+
+}
+
+
+select{
+
+    padding: 8px 12px;
+    font-size:16px;
+    border-radius:8px;
+    width: 150px;
+
+}
+
+
+#map{
+
+height:750px;
+width:100%;
+
+}
+
+body{
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+
+.topbar{
+
+background:#05007e;
+
+height:90px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding-left:50px;
+
+padding-right:50px;
+
+color:white;
+
+border-bottom:1px solid white;
+
+}
+
+
+.left-section{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+}
+
+
+.logo{
+
+width:70px;
+height:70px;
+
+object-fit:contain;
+
+}
+
+
+.bagong-logo{
+
+width:55px;
+
+}
+
+
+.university-name{
+
+line-height:1;
+
+}
+
+
+.small{
+
+font-size:18px;
+font-weight:500;
+
+}
+
+
+.large{
+
+font-size:34px;
+font-weight:bold;
+
+}
+
+
+.right-section{
+
+text-align:left;
+
+}
+
+
+.right-section h2{
+
+font-size:18px;
+margin:0;
+
+}
+
+
+#clock{
+
+margin-top:8px;
+
+font-size:14px;
+
+}
+
+
+.controls{
+
+padding:15px 40px;
+
+background: #d6a73d;
+
+text-align:left;
+
+box-shadow:
+0 2px 10px
+rgba(0,0,0,.1);
+
+}
+
+
+#map{
+
+height:750px;
+width:100%;
+
+}
+
+.search-box{
+
+margin-left:300px;
+
+width:330px;
+
+padding:9px;
+
+border-radius:8px;
+
+border:1px solid gray;
+
+}
+
+
+#map{
+
+position:absolute;
+
+left:90px;
+
+top:270px;
+
+width:58%;
+
+height:62vh;
+
+border:5px solid black;
+
+}
+
+
+body{
+
+background-image:
+url("https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.6435-9/40138502_1183491121790843_7662863715020046336_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeHnzvyNzHt9I0Xrz4QWhfg_91gjDtFByQ33WCMO0UHJDVyQpwPBnSq_yK4fxQvl-6YUzBeGmEBpNLv2I7ys7FIt&_nc_ohc=DHiaJAQZ7YMQ7kNvwF_1DJv&_nc_oc=AdrhX9xGlwjsqNQpFbJU_eKlBBVy1Dt0e6a988wdief2fsEjnJtXPP5IdM5tt-OK8R5U21Wcpweng6RKUDq02VtR&_nc_zt=23&_nc_ht=scontent.fdvo1-1.fna&_nc_gid=HQB71HIlRt6Fg_FX2bUhkw&_nc_ss=7b2a8&oh=00_Af5GhHgyr21zZqgIJlh58POUPBkDHIsSTfE2wAkWaUvFVA&oe=6A36D874");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
+background-attachment:fixed;
+
+}
+
+
+/* keeps yellow visible on top of image */
+
+.controls,
+.topbar{
+
+position:relative;
+z-index:10;
+
+}
+
+
+#map{
+
+z-index:5;
+
+}
+
+
+.side-panel{
+
+position:absolute;
+
+right:0;
+
+top:177px;
+
+width:33%;
+
+height:calc(100vh - 235px);
+
+background:white;
+
+border:5px solid black;
+
+display:flex;
+
+flex-direction:column;
+
+box-sizing:border-box;
+
+}
+
+
+/* yellow overlay remains */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:
+rgba(
+214,
+167,
+61,
+0.78
+);
+
+z-index:-1;
+
+}
+
+.side-panel{
+position:absolute !important;
+right:0 !important;
+top:159px !important;
+width:33% !important;
+height:calc(100vh - 159px) !important;
+border:5px solid black !important;
+box-sizing:border-box !important;
+display:grid !important;
+grid-template-rows:50% 50% !important;
+background:white !important;
+}
+
+#legendBox{
+background:#050083 !important;
+color:white !important;
+height:100% !important;
+width:100% !important;
+padding:20px !important;
+box-sizing:border-box !important;
+border-bottom:4px solid black !important;
+display:flex !important;
+flex-direction:column !important;
+justify-content:center !important;
+align-items:center !important;
+text-align:center !important;
+}
+
+#legendBox h2{
+margin:0 0 18px 0 !important;
+font-size:28px !important;
+color:white !important;
+}
+
+#legendBox ul{
+list-style:none !important;
+padding:0 !important;
+margin:0 !important;
+display:grid !important;
+grid-template-columns:auto auto !important;
+column-gap:45px !important;
+row-gap:8px !important;
+font-size:16px !important;
+text-align:left !important;
+color:white !important;
+}
+
+#legendBox li{
+margin:0 !important;
+padding:0 !important;
+white-space:nowrap !important;
+}
+
+#placeInfo{
+background:white !important;
+height:100% !important;
+width:100% !important;
+padding:25px !important;
+box-sizing:border-box !important;
+}
+
+.right-section{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+color:white;
+}
+
+.place-img{
+width:100%;
+height:250px;
+object-fit:cover;
+border:3px solid #050083;
+border-radius:10px;
+margin:10px 0;
+display:block;
+}
+
+#clock{
+margin-top:6px;
+font-size:14px;
+font-weight:bold;
+color:white;
+}

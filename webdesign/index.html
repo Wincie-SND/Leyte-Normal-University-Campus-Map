@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="icon" href="https://www.lnu.edu.ph/wp-content/uploads/2023/10/cropped-lnu_logo-192x192.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leyte Normal University | Campus Map</title>
+    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+</head>
+
+
+
+<body>
+
+    <header class="topbar">
+
+        <div class="left-section">
+
+            <a href="LNUmap.html">
+
+                <img
+                src="https://www.lnu.edu.ph/wp-content/uploads/2023/10/cropped-lnu_logo-192x192.png"
+                class="logo"
+                alt="LNU">
+
+            </a>
+
+            <div class="university-name">
+
+                <div class="small">
+                    LEYTE NORMAL
+                </div>
+
+                <div class="large">
+                    UNIVERSITY
+                </div>
+
+            </div>
+
+            <img
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Bagong_Pilipinas_logo.png"
+            class="bagong-logo"
+            alt="Bagong Pilipinas">
+
+        </div>
+
+
+        <div class="right-section">
+
+            <h2>
+            Philippine Standard Time:
+            </h2>
+
+            <div id="clock"></div>
+
+        </div>
+
+    </header>
+
+
+    <div class="controls">
+        <label>Select Campus:</label>
+        <select id="campusSelector">
+            
+            <option value="../waypoints/Independencia.geojson" selected>Independencia</option>
+                Independencia Campus
+            </option>
+        
+            <option value="../waypoints/Paterno.geojson">Paterno</option>
+                Paterno Campus
+            </option>
+
+            <option value="../waypoints/Youngfield.geojson">Youngfield</option>                
+                Youngfield Campus
+            </option>
+
+            <input
+                type="text"
+                id="searchBox"
+                placeholder="Search place..."
+                class="search-box">
+
+        </select>
+    </div>
+    
+
+     <div id="map"></div>
+
+        <div class="side-panel">
+
+    <div class="legend-box" id="legendBox">
+
+        <h2>Map Legend</h2>
+
+        <ul id="legendList">
+            <li>Select a campus to load pins.</li>
+        </ul>
+
+    </div>
+
+    <div class="place-info" id="placeInfo">
+
+        <h2 id="placeName">
+        Place Name
+        </h2>
+
+        <p id="placeDescription">
+
+        Click a pin to display place information.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+    
+
+
+
+
+    <script>
+
+
+
+var map = L.map('map').setView([11.2378,125.0014],13);
+
+L.tileLayer(
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+maxZoom:19,
+attribution:'© OpenStreetMap'
+}
+).addTo(map);
+
+
+let campusLayer;
+
+    function updateLegend(data){
+
+    const legendList =
+    document.getElementById("legendList");
+
+    legendList.innerHTML = "";
+
+    data.features.forEach(function(feature){
+
+        if(
+        feature.properties &&
+        feature.properties.name
+        ){
+
+            let li =
+            document.createElement("li");
+
+            li.innerHTML =
+            "📍 " + feature.properties.name;
+
+            legendList.appendChild(li);
+
+        }
+
+    });
+
+    }
+
+
+
+    function loadCampus(file){
+
+        if(campusLayer){
+            map.removeLayer(campusLayer);
+        }
+
+        fetch(file)
+        .then(response=>response.json())
+        .then(data=>{
+
+            updateLegend(data);
+            campusLayer=L.geoJSON(data,{
+                onEachFeature:function(
+                feature,
+                layer){
+
+                    if(
+                    feature.properties &&
+                    feature.properties.name
+                    ){
+
+                        layer.bindPopup(
+                        feature.properties.name
+                        );
+
+                        layer.on("click",function(){
+
+                    document
+                    .getElementById("placeName")
+                    .innerHTML =
+                    feature.properties.name;
+
+                    document
+                    .getElementById("placeDescription")
+                    .innerHTML =
+                    `
+                    ${feature.properties.image ? 
+                    `<img src="${feature.properties.image}" class="place-img">` 
+                    : ""}
+
+                    <p>
+                    ${feature.properties.description || ""}
+                    </p>
+                    `;
+
+                    });
+
+                    }
+
+                }
+
+            }).addTo(map);
+
+            map.fitBounds(
+            campusLayer.getBounds()
+            );
+
+        });
+
+    }
+
+
+                loadCampus(
+                '../waypoints/Independencia.geojson'
+                );
+
+
+                document
+                .getElementById(
+                'campusSelector'
+                )
+
+                .addEventListener(
+                'change',
+
+                function(){
+
+                loadCampus(
+                this.value
+                );
+
+                });
+
+
+
+                // PUT THE CLOCK CODE HERE ↓↓↓
+                function updateTime(){
+
+                    const options={
+
+                    weekday:'long',
+                    year:'numeric',
+                    month:'long',
+                    day:'numeric',
+
+                    hour:'numeric',
+                    minute:'2-digit',
+                    second:'2-digit'
+
+                    };
+
+                    document
+                    .getElementById("clock")
+                    .innerHTML=
+
+                    new Date()
+                    .toLocaleString(
+                    'en-PH',
+                    options
+                    );
+
+                    }
+
+                    updateTime();
+
+                    setInterval(
+                    updateTime,
+                    1000
+                );
+
+                document
+                    .getElementById("searchBox")
+
+                    .addEventListener(
+                    "keyup",
+
+                    function(){
+
+                    let searchValue=
+                    this.value.toLowerCase();
+
+
+                    campusLayer.eachLayer(
+
+                    function(layer){
+
+                    if(
+
+                    layer.feature &&
+
+                    layer.feature.properties &&
+
+                    layer.feature.properties.name
+
+                    ){
+
+                    let name=
+
+                    layer.feature.properties.name
+
+                    .toLowerCase();
+
+
+                    if(
+
+                    name.includes(searchValue)
+
+                    && searchValue!=""
+
+                    ){
+
+                    layer.openPopup();
+
+                    if(layer.getLatLng){
+
+                    map.setView(
+                    layer.getLatLng(),
+                    19
+                    );
+
+                    }
+
+                    document.getElementById(
+                    "placeName"
+                    ).innerHTML=
+
+                    layer.feature.properties.name;
+
+
+                    document.getElementById(
+                    "placeDescription"
+                    ).innerHTML=
+
+                    layer.feature.properties.description ||
+
+                    "No description available.";
+
+                    }
+
+                    }
+
+                    });
+
+});
+
+
+</script>
+ 
+
+</body> 
+
+
+</html>

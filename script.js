@@ -49,7 +49,7 @@ function showPlaceInfo(feature){
     : ""}
 
     <p>
-    ${feature.properties.description || "No description available."}
+    ${feature.properties.description || ""}
     </p>
     `;
 
@@ -137,7 +137,7 @@ function goToLocation(name){
 
 }
 
-loadCampus("waypoints/Independencia.geojson");
+loadCampus("../waypoints/Independencia.geojson");
 
 document
 .getElementById("campusSelector")

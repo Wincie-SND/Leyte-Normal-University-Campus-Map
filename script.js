@@ -137,7 +137,7 @@ function goToLocation(name){
 
 }
 
-loadCampus("waypoints/Independencia.geojson");
+loadCampus("waypoints/Independencia.geoJSON");
 
 document
 .getElementById("campusSelector")

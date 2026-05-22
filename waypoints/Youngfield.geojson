@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "waypoints",
+"features": [
+{ "type": "Feature", "properties": { "ele": 60.1, "time": "2026-05-19T10:22:20Z", "name": "Conversion BLDG", "image": "images/youngfield/conversion.jpg" }, "geometry": { "type": "Point", "coordinates": [ 125.00038415193559, 11.235645906105011 ] } },
+{ "type": "Feature", "properties": { "ele": 55.1, "time": "2026-05-19T10:23:22Z", "name": "Integrated Laboratory School (ILS) BLDG", "image": "images/youngfield/ils.jpg" }, "geometry": { "type": "Point", "coordinates": [ 125.00052630901338, 11.235951078990839 ] } },
+{ "type": "Feature", "properties": { "ele": 76.1, "time": "2026-05-19T10:25:05Z", "name": "LNU Canteen", "image": "images/youngfield/lnucanteen.jpg" }, "geometry": { "type": "Point", "coordinates": [ 125.00023931264879, 11.236024741363192 ] } },
+{ "type": "Feature", "properties": { "ele": 74.2, "time": "2026-05-19T10:25:38Z", "name": "LNU Dormitory", "image": "images/youngfield/lnudorm.jpg" }, "geometry": { "type": "Point", "coordinates": [ 124.99997645616533, 11.236151019672008 ] } },
+{ "type": "Feature", "properties": { "ele": 70.1, "time": "2026-05-19T10:26:33Z", "name": "LNU Youngfield Gym", "image": "images/youngfield/gym-yf.jpg" }, "geometry": { "type": "Point", "coordinates": [ 125.00006765127185, 11.2359379249938 ] } },
+{ "type": "Feature", "properties": { "ele": 75.9, "time": "2026-05-19T10:29:55Z", "name": "Academic BLDG", "image":"images/youngfield/acad.jpg"}, "geometry": { "type": "Point", "coordinates": [ 124.99951511621478, 11.235672214125131 ] } },
+{ "type": "Feature", "properties": { "ele": 73.7, "time": "2026-05-19T10:31:31Z", "name": "Hotel Crescencia", "image": "images/youngfield/hotelcrescencia.jpeg" }, "geometry": { "type": "Point", "coordinates": [ 125.00001400709155, 11.235361779334829 ] } },
+{ "type": "Feature", "properties": { "ele": 69.8, "time": "2026-05-19T10:32:14.823Z", "name": "CME BLDG" }, "geometry": { "type": "Point", "coordinates": [ 125.00007569789888, 11.235751138171075 ] } },
+{ "type": "Feature", "properties": { "ele": 75.1, "time": "2026-05-19T11:31:35Z", "name": "De Venecia BLDG", "image":"images/youngfield/devenecia.jpg"}, "geometry": { "type": "Point", "coordinates": [ 125.00032782554628, 11.235151314880156 ] } }
+]
+}

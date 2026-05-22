@@ -192,3 +192,16 @@ setTimeout(()=>{
 map.invalidateSize();
 
 },300);
+
+function goToWaypoint(name) {
+    const waypoint = allMarkers.find(item => item.name === name);
+
+    if (waypoint) {
+        map.setView(waypoint.marker.getLatLng(), 19);
+        waypoint.marker.openPopup();
+
+        document.getElementById("placeTitle").textContent = waypoint.name;
+        document.getElementById("placeImage").src = waypoint.image;
+    }
+
+}

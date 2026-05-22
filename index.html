@@ -201,6 +201,16 @@ let campusLayer;
                 feature,
                 layer){
 
+
+
+                    allMarkers.push({
+                    name: feature.properties.name,
+                    marker: layer,
+                    image: feature.properties.image
+                    });
+    
+
+
                     if(
                     feature.properties &&
                     feature.properties.name

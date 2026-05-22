@@ -1,207 +1,210 @@
-var map=L.map('map').setView(
-[11.2448,125.0034],
-18
-);
-
+var map = L.map("map").setView([11.2378, 125.0014], 13);
 
 L.tileLayer(
-
-'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-
+"https://tile.openstreetmap.org/{z}/{x}/{y}.png",
 {
-
-maxZoom:22
-
+    maxZoom: 22,
+    attribution: "© OpenStreetMap"
 }
-
 ).addTo(map);
 
+let campusLayer;
+let allMarkers = [];
 
+function updateLegend(data){
 
-const places=[
+    const legendList = document.getElementById("legendList");
 
-{
+    legendList.innerHTML = "";
 
-name:"HRDC Gymnasium",
+    data.features.forEach(function(feature){
 
-description:
-"Gymnasium used for university events and sports.",
+        if(feature.properties && feature.properties.name){
 
-coords:[11.2450,125.0030]
+            let li = document.createElement("li");
 
-},
+            li.innerHTML = "📍 " + feature.properties.name;
 
-{
+            li.onclick = function(){
+                goToLocation(feature.properties.name);
+            };
 
-name:"Administration Building",
+            legendList.appendChild(li);
 
-description:
-"Main administration office of LNU.",
+        }
 
-coords:[11.2445,125.0037]
-
-},
-
-{
-
-name:"Library",
-
-description:
-"University library and study area.",
-
-coords:[11.2442,125.0033]
+    });
 
 }
 
-];
+function showPlaceInfo(feature){
 
+    document.getElementById("placeName").innerHTML =
+    feature.properties.name;
 
+    document.getElementById("placeDescription").innerHTML =
+    `
+    ${feature.properties.image ?
+    `<img src="${feature.properties.image}" class="place-img">`
+    : ""}
 
-places.forEach(place=>{
-
-let marker=
-L.marker(place.coords)
-.addTo(map);
-
-marker.bindPopup(
-place.name
-);
-
-
-marker.on(
-"click",
-function(){
-
-document.getElementById(
-"placeName"
-).innerHTML=
-place.name;
-
-
-document.getElementById(
-"placeDescription"
-).innerHTML=
-place.description;
-
-});
-
-});
-
-
-
-
-
-function updateTime(){
-
-const now=
-new Date();
-
-
-const options={
-
-weekday:'long',
-
-year:'numeric',
-
-month:'long',
-
-day:'numeric',
-
-hour:'numeric',
-
-minute:'numeric',
-
-second:'numeric'
-
-};
-
-
-document.getElementById(
-"pstTime"
-).innerHTML=
-
-now.toLocaleString(
-'en-PH',
-options
-);
+    <p>
+    ${feature.properties.description || "No description available."}
+    </p>
+    `;
 
 }
 
+function loadCampus(file){
 
-setInterval(
-updateTime,
-1000
-);
+    if(campusLayer){
+        map.removeLayer(campusLayer);
+    }
 
-updateTime();
+    allMarkers = [];
 
+    fetch(file)
+    .then(function(response){
 
+        if(!response.ok){
+            throw new Error("GeoJSON file not found: " + file);
+        }
 
+        return response.json();
 
-document
-.getElementById(
-"searchBox"
-)
+    })
+    .then(function(data){
 
-.addEventListener(
+        updateLegend(data);
 
-"keyup",
+        campusLayer = L.geoJSON(data, {
 
-function(){
+            onEachFeature: function(feature, layer){
 
-let value=
-this.value.toLowerCase();
+                if(feature.properties && feature.properties.name){
 
-let found=
-places.find(
+                    allMarkers.push({
+                        name: feature.properties.name,
+                        marker: layer,
+                        feature: feature
+                    });
 
-place=>
+                    layer.bindPopup(feature.properties.name);
 
-place.name
-.toLowerCase()
+                    layer.on("click", function(){
+                        showPlaceInfo(feature);
+                    });
 
-.includes(
-value
-)
+                }
 
-);
+            }
 
-if(found){
+        }).addTo(map);
 
-map.setView(
-found.coords,
-20
-);
+        map.fitBounds(campusLayer.getBounds());
 
-document.getElementById(
-"placeName"
-).innerHTML=
-found.name;
+    })
+    .catch(function(error){
 
-document.getElementById(
-"placeDescription"
-).innerHTML=
-found.description;
+        console.log(error);
+        alert("GeoJSON failed to load. Check file path or filename.");
+
+    });
 
 }
 
-});
+function goToLocation(name){
 
-setTimeout(()=>{
+    const found = allMarkers.find(function(item){
+        return item.name === name;
+    });
 
-map.invalidateSize();
+    if(found){
 
-},300);
+        if(found.marker.getLatLng){
 
-function goToWaypoint(name) {
-    const waypoint = allMarkers.find(item => item.name === name);
+            map.setView(
+                found.marker.getLatLng(),
+                19
+            );
 
-    if (waypoint) {
-        map.setView(waypoint.marker.getLatLng(), 19);
-        waypoint.marker.openPopup();
+        }
 
-        document.getElementById("placeTitle").textContent = waypoint.name;
-        document.getElementById("placeImage").src = waypoint.image;
+        found.marker.openPopup();
+        showPlaceInfo(found.feature);
+
     }
 
 }
+
+loadCampus("waypoints/Independencia.geojson");
+
+document
+.getElementById("campusSelector")
+.addEventListener("change", function(){
+
+    document.getElementById("searchBox").value = "";
+    loadCampus(this.value);
+
+});
+
+document
+.getElementById("searchBox")
+.addEventListener("keyup", function(){
+
+    let searchValue = this.value.toLowerCase();
+
+    if(searchValue === ""){
+        return;
+    }
+
+    const found = allMarkers.find(function(item){
+
+        return item.name
+        .toLowerCase()
+        .includes(searchValue);
+
+    });
+
+    if(found){
+
+        if(found.marker.getLatLng){
+
+            map.setView(
+                found.marker.getLatLng(),
+                19
+            );
+
+        }
+
+        found.marker.openPopup();
+        showPlaceInfo(found.feature);
+
+    }
+
+});
+
+function updateTime(){
+
+    const options = {
+        weekday:"long",
+        year:"numeric",
+        month:"long",
+        day:"numeric",
+        hour:"numeric",
+        minute:"2-digit",
+        second:"2-digit"
+    };
+
+    document.getElementById("clock").innerHTML =
+    new Date().toLocaleString("en-PH", options);
+
+}
+
+updateTime();
+
+setInterval(updateTime, 1000);
+
+setTimeout(function(){
+    map.invalidateSize();
+}, 300);

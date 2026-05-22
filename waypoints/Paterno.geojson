@@ -12,3 +12,4 @@
 { "type": "Feature", "properties": { "ele": 80.2, "time": "2026-05-19T10:13:40Z", "name": "RAMO BLDG", "image": "images/paterno/ramo.jpg", "x_speed": 0.15904917 }, "geometry": { "type": "Point", "coordinates": [ 125.00101983547212, 11.238534512379477 ] } }
 ]
 }
+    

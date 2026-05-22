@@ -3,94 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Leyte Normal University | Campus Map</title>
-
 <link rel="icon" href="https://www.lnu.edu.ph/wp-content/uploads/2023/10/cropped-lnu_logo-192x192.png">
 <link rel="stylesheet" href="style.css">
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 </head>
-
 <body>
-
 <header class="topbar">
-
     <div class="left-section">
-
         <a href="index.html">
-            <img
-            src="https://www.lnu.edu.ph/wp-content/uploads/2023/10/cropped-lnu_logo-192x192.png"
-            class="logo"
-            alt="LNU">
+            <img src="https://www.lnu.edu.ph/wp-content/uploads/2023/10/cropped-lnu_logo-192x192.png" class="logo" alt="LNU">
         </a>
-
         <div class="university-name">
             <div class="small">LEYTE NORMAL</div>
             <div class="large">UNIVERSITY</div>
         </div>
-
-        <img
-        src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Bagong_Pilipinas_logo.png"
-        class="bagong-logo"
-        alt="Bagong Pilipinas">
-
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Bagong_Pilipinas_logo.png" class="bagong-logo" alt="Bagong Pilipinas">
     </div>
-
     <div class="right-section">
         <h2>Philippine Standard Time:</h2>
         <div id="clock"></div>
     </div>
-
 </header>
 
 <div class="controls">
-
-    <label>Select Campus:</label>
-
+    <label for="campusSelector">Select Campus:</label>
     <select id="campusSelector">
-
-    <option value="waypoints/Independencia.geojson" selected>Independencia</option>
-    <option value="waypoints/Paterno.geojson">Paterno</option>
-    <option value="waypoints/Youngfield.geojson">Youngfield</option>
-
+        <option value="waypoints/Independencia.geojson" selected>Independencia</option>
+        <option value="waypoints/Paterno.geojson">Paterno</option>
+        <option value="waypoints/Youngfield.geojson">Youngfield</option>
     </select>
-
-    <input
-    type="text"
-    id="searchBox"
-    placeholder="Search place..."
-    class="search-box">
-
+    <input type="text" id="searchBox" placeholder="Search place..." class="search-box">
 </div>
 
 <div class="main-content">
-
     <div id="map"></div>
-
     <div class="side-panel">
-
         <div class="legend-box" id="legendBox">
             <h2>Map Legend</h2>
             <ul id="legendList">
                 <li>Select a campus to load pins.</li>
             </ul>
         </div>
-
         <div class="place-info" id="placeInfo">
             <h2 id="placeName">Place Name</h2>
-            <div id="placeDescription">
-                Click a pin to display place information.
-            </div>
+            <div id="placeDescription">Click a pin to display place information.</div>
         </div>
-
     </div>
-
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>

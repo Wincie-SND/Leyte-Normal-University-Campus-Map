@@ -13,20 +13,29 @@ let allMarkers = [];
 
 function updateLegend(data){
 
-    const legendList = document.getElementById("legendList");
+    const legendList =
+    document.getElementById("legendList");
 
     legendList.innerHTML = "";
 
     data.features.forEach(function(feature){
 
-        if(feature.properties && feature.properties.name){
+        if(feature.properties &&
+        feature.properties.name){
 
-            let li = document.createElement("li");
+            let li =
+            document.createElement("li");
 
-            li.innerHTML = "📍 " + feature.properties.name;
+            li.innerHTML =
+            "📍 " +
+            feature.properties.name;
 
             li.onclick = function(){
-                goToLocation(feature.properties.name);
+
+                goToLocation(
+                feature.properties.name
+                );
+
             };
 
             legendList.appendChild(li);
@@ -39,17 +48,28 @@ function updateLegend(data){
 
 function showPlaceInfo(feature){
 
-    document.getElementById("placeName").innerHTML =
+    document
+    .getElementById("placeName")
+    .innerHTML =
+
     feature.properties.name;
 
-    document.getElementById("placeDescription").innerHTML =
+    document
+    .getElementById("placeDescription")
+    .innerHTML =
+
     `
     ${feature.properties.image ?
-    `<img src="${feature.properties.image}" class="place-img">`
+
+    `<img
+    src="${feature.properties.image}"
+    class="place-img">`
+
     : ""}
 
     <p>
-    ${feature.properties.description || ""}
+    ${feature.properties.description
+    || "No description available."}
     </p>
     `;
 
@@ -58,54 +78,93 @@ function showPlaceInfo(feature){
 function loadCampus(file){
 
     if(campusLayer){
+
         map.removeLayer(campusLayer);
+
     }
 
     allMarkers = [];
 
     fetch(file)
+
     .then(function(response){
 
         if(!response.ok){
-            throw new Error("GeoJSON file not found: " + file);
+
+            throw new Error(
+            "GeoJSON file not found: "
+            + file
+            );
+
         }
 
         return response.json();
 
     })
+
     .then(function(data){
 
-        campusLayer = L.geoJSON(data, {
+        updateLegend(data);
 
-    onEachFeature: function(feature, layer){
+        campusLayer =
+        L.geoJSON(data, {
 
-        if(feature.properties && feature.properties.name){
+            onEachFeature:
+            function(feature, layer){
 
-            allMarkers.push({
-                name: feature.properties.name,
-                marker: layer,
-                feature: feature
-            });
+                if(
+                feature.properties &&
+                feature.properties.name
+                ){
 
-            layer.bindPopup(feature.properties.name);
+                    allMarkers.push({
 
-            layer.on("click", function(){
-                showPlaceInfo(feature);
-            });
+                        name:
+                        feature.properties.name,
 
-        }
+                        marker:
+                        layer,
 
-    }
+                        feature:
+                        feature
 
-}).addTo(map);
+                    });
 
-        map.fitBounds(campusLayer.getBounds());
+                    layer.bindPopup(
+                    feature.properties.name
+                    );
+
+                    layer.on(
+                    "click",
+
+                    function(){
+
+                        showPlaceInfo(
+                        feature
+                        );
+
+                    });
+
+                }
+
+            }
+
+        }).addTo(map);
+
+        map.fitBounds(
+        campusLayer.getBounds()
+        );
 
     })
+
     .catch(function(error){
 
         console.log(error);
-        alert("GeoJSON failed to load. Check file path or filename.");
+
+        alert(
+        "GeoJSON failed to load:\n"
+        + file
+        );
 
     });
 
@@ -113,8 +172,11 @@ function loadCampus(file){
 
 function goToLocation(name){
 
-    const found = allMarkers.find(function(item){
+    const found =
+    allMarkers.find(function(item){
+
         return item.name === name;
+
     });
 
     if(found){
@@ -122,41 +184,61 @@ function goToLocation(name){
         if(found.marker.getLatLng){
 
             map.setView(
-                found.marker.getLatLng(),
-                19
+            found.marker.getLatLng(),
+            19
             );
 
         }
 
         found.marker.openPopup();
-        showPlaceInfo(found.feature);
+
+        showPlaceInfo(
+        found.feature
+        );
 
     }
 
 }
 
-loadCampus("waypoints/Independencia.geojson");
+loadCampus(
+"waypoints/Independencia.geojson"
+);
 
 document
 .getElementById("campusSelector")
-.addEventListener("change", function(){
 
-    document.getElementById("searchBox").value = "";
+.addEventListener(
+"change",
+
+function(){
+
+    document
+    .getElementById("searchBox")
+    .value = "";
+
     loadCampus(this.value);
 
 });
 
 document
 .getElementById("searchBox")
-.addEventListener("keyup", function(){
 
-    let searchValue = this.value.toLowerCase();
+.addEventListener(
+"keyup",
+
+function(){
+
+    let searchValue =
+    this.value.toLowerCase();
 
     if(searchValue === ""){
+
         return;
+
     }
 
-    const found = allMarkers.find(function(item){
+    const found =
+    allMarkers.find(function(item){
 
         return item.name
         .toLowerCase()
@@ -169,14 +251,17 @@ document
         if(found.marker.getLatLng){
 
             map.setView(
-                found.marker.getLatLng(),
-                19
+            found.marker.getLatLng(),
+            19
             );
 
         }
 
         found.marker.openPopup();
-        showPlaceInfo(found.feature);
+
+        showPlaceInfo(
+        found.feature
+        );
 
     }
 
@@ -185,24 +270,39 @@ document
 function updateTime(){
 
     const options = {
+
         weekday:"long",
         year:"numeric",
         month:"long",
         day:"numeric",
+
         hour:"numeric",
         minute:"2-digit",
         second:"2-digit"
+
     };
 
-    document.getElementById("clock").innerHTML =
-    new Date().toLocaleString("en-PH", options);
+    document
+    .getElementById("clock")
+    .innerHTML =
+
+    new Date()
+    .toLocaleString(
+    "en-PH",
+    options
+    );
 
 }
 
 updateTime();
 
-setInterval(updateTime, 1000);
+setInterval(
+updateTime,
+1000
+);
 
 setTimeout(function(){
+
     map.invalidateSize();
-}, 300);
+
+},300);

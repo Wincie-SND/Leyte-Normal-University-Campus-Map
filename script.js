@@ -75,31 +75,29 @@ function loadCampus(file){
     })
     .then(function(data){
 
-        updateLegend(data);
-
         campusLayer = L.geoJSON(data, {
 
-            onEachFeature: function(feature, layer){
+    onEachFeature: function(feature, layer){
 
-                if(feature.properties && feature.properties.name){
+        if(feature.properties && feature.properties.name){
 
-                    allMarkers.push({
-                        name: feature.properties.name,
-                        marker: layer,
-                        feature: feature
-                    });
+            allMarkers.push({
+                name: feature.properties.name,
+                marker: layer,
+                feature: feature
+            });
 
-                    layer.bindPopup(feature.properties.name);
+            layer.bindPopup(feature.properties.name);
 
-                    layer.on("click", function(){
-                        showPlaceInfo(feature);
-                    });
+            layer.on("click", function(){
+                showPlaceInfo(feature);
+            });
 
-                }
+        }
 
-            }
+    }
 
-        }).addTo(map);
+}).addTo(map);
 
         map.fitBounds(campusLayer.getBounds());
 
@@ -137,7 +135,7 @@ function goToLocation(name){
 
 }
 
-loadCampus("waypoints/Independencia.geoJSON");
+loadCampus("waypoints/Independencia.geojson");
 
 document
 .getElementById("campusSelector")

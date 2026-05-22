@@ -77,7 +77,7 @@ function loadCampus(file){
 
         updateLegend(data);
 
-        campusLayer = L.geoJSON(data, {
+        campusLayer = L.geojson(data, {
 
             onEachFeature: function(feature, layer){
 

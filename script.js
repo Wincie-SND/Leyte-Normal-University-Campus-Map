@@ -157,14 +157,10 @@ function loadCampus(file){
 
     })
 
-    .catch(function(error){
+   .catch(function(error){
 
-        console.log(error);
-
-        alert(
-        "GeoJSON failed to load:\n"
-        + file
-        );
+    console.log(error);
+    alert("GeoJSON failed to load. Check file path or filename.");
 
     });
 
